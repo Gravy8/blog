@@ -1,6 +1,7 @@
 package com.codeup;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,15 +10,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 class HelloController {
 
     @GetMapping("/hello/{name}")
-    @ResponseBody
-    public String hello(@PathVariable String name) {
-        return "<h1>Hello, " + name + "!</h1>";
+    public String hello(@PathVariable String name, Model model) {
+        model.addAttribute("name" , name);
+        return "hello";
     }
 
-    @GetMapping("/increment/{number}")
+    /*@GetMapping("/increment/{number}")
     @ResponseBody
     public String increment(@PathVariable int number) {
         return number + " plus one is " + (number + 1);
-    }
+    }*/
 
 }
