@@ -10,6 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -22,24 +23,22 @@ public class PostsController extends BaseController {
     @GetMapping
     public String showPosts(Model model) {
         List<Post> posts = postsDao.findAll();
+        Collections.reverse(posts);
         model.addAttribute("posts", posts);
         return "posts/index";
     }
 
     @GetMapping("/{id}")
     public String individualShowPage(Model model, @PathVariable int id) {
-        //Post post = DaoFactory.getPostsDao().getPostById(id);
         Post post = postsDao.findById(id);
         User user = loggedInUser();
         boolean isPostingUser = false;
-        System.out.println("posts creators id " + post.getUser().getId());
 
         if (user != null) {
-            System.out.println("logged in users id" + user.getId());
             isPostingUser = post.getUser().getId() == user.getId();
 
         }
-        System.out.println(isPostingUser);
+
         model.addAttribute("post", post);
         model.addAttribute("isPostingUser", isPostingUser);
         return "posts/show";
@@ -48,6 +47,12 @@ public class PostsController extends BaseController {
     @GetMapping("/{id}/edit")
     public String editPost(Model model, @PathVariable int id) {
         Post post = postsDao.findById(id);
+        User user = loggedInUser();
+        if (loggedInUser() == null){
+            return "redirect:/posts/" + id;
+        }else if(post.getUser().getId() != loggedInUser().getId()){
+            return "redirect:/posts/" + id;
+        }
         model.addAttribute("post", post);
         return "posts/edit";
     }
