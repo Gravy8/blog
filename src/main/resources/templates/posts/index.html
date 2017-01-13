@@ -5,12 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-<div clas="container">
-    <div class="row text-center">
-        <h1>All Posts</h1>
-    </div>
-        <table>
-            <tr>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+<div class="container">
+    <h1>All Posts</h1>
+
+    <div>
+        <table class="table">
+            <tr class="active">
                 <th>ID</th>
                 <th>Title</th>
                 <th>Body</th>
@@ -18,11 +19,11 @@
             <tr th:each="post : ${posts}">
                 <td th:text="${post.id}">ID</td>
                 <td><a th:text="${post.title}" th:href="@{'/posts/' + ${post.id}}"></a></td>
-                <td th:text="${post.body}">Body</td>
+                <td th:text="${#strings.abbreviate(post.body, 100)}">Body</td>
             </tr>
         </table>
-    <a  href="/posts/create">Create a New Post</a>
-<footer th:replace="fragments/footer :: footer"></footer>
+    </div>
 </div>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>
