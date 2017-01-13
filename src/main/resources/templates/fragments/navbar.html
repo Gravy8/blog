@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/posts">Blog</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li sec:authorize="isAuthenticated()"><a href="/posts/create">Create Post</a></li>
+            <li sec:authorize="isAnonymous()"><a href="/user/login">Login</a></li>
+            <li sec:authorize="isAuthenticated()"><a href="#" onclick="document.getElementById('logoutForm').submit();">Logout</a></li>
+            <li sec:authorize="isAnonymous()"><a href="/user/create">Create User</a></li>
+        </ul>
+    </div>
+    <form id="logoutForm" th:action="@{/logout}" method="post"></form>
+</nav>
+
+</body>
+</html>
