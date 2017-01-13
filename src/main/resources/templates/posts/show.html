@@ -5,17 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-<div class="container">
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<div class="container col-md-8 col-md-offset-2">
+
     <h1 th:text="${post.title}"></h1>
+
+    <hr/>
+
     <p th:text="${post.body}"></p>
     <!--<a th:href="@{'/posts/' + ${post.id} + '/edit'}">Edit Post</a>-->
     <!--<a onclick="return confirm('Are you sure you want to delete this post?')" th:href="@{'/posts/' + ${post.id} + '/delete/'}">Delete Post</a>-->
     <div th:if="${isPostingUser}">
         <form th:action="@{'/posts/' + ${post.id} + '/edit'}" method="get">
-            <input type="submit" value="Edit Post"/>
+            <button type="submit">Edit Post</button>
         </form>
         <form th:action="@{'/posts/' + ${post.id} + '/delete'}" method="POST">
-            <input onclick="return confirm('Are you sure you want to delete this post?')" type="submit" value="Delete Post"/>
+            <button onclick="return confirm('Are you sure you want to delete this post?')" type="submit">Delete Post</button>
         </form>
     </div>
 
