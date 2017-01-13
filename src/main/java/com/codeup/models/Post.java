@@ -7,9 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 
-/**
- * Created by Fer on 1/5/17.
- */
 @Entity
 @Table(name="posts")
 public class Post {
